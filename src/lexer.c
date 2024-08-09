@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main() {
+int lexer() {
   FILE *file = fopen("../tests/print.bi", "r");
 
   char output[100];
@@ -10,4 +10,6 @@ int main() {
   }
 
   fclose(file);
+
+  return 0;
 }
