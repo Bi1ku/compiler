@@ -1,5 +1,12 @@
-#include<stdio.h>
+#include <stdio.h>
 
 int main() {
-  printf("Hello, World!\n");
+  FILE *file = fopen("../tests/print.bi", "r");
+  char output[100];
+
+  while (fgets(output, 100, file)) {
+    printf("%s", output);
+  }
+
+  fclose(file);
 }
