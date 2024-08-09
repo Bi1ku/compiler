@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -dynamiclib -Wl,-headerpad_max_install_names -o libparser.dylib -install_name @rpath/libparser.dylib CMakeFiles/parser.dir/src/parser.c.o

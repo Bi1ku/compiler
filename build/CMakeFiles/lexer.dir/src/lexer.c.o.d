@@ -1,6 +1,5 @@
-CMakeFiles/compiler.dir/src/main.c.o: \
-  /Users/biiku/code/compiler/src/main.c \
-  /Users/biiku/code/compiler/src/../include/lexer.h \
+CMakeFiles/lexer.dir/src/lexer.c.o: \
+  /Users/biiku/code/compiler/src/lexer.c \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/cdefs.h \

@@ -129,6 +129,93 @@ compiler/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/build
 .PHONY : compiler/fast
 
+#=============================================================================
+# Target rules for targets named lexer
+
+# Build rule for target.
+lexer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lexer
+.PHONY : lexer
+
+# fast build rule for target.
+lexer/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lexer.dir/build.make CMakeFiles/lexer.dir/build
+.PHONY : lexer/fast
+
+#=============================================================================
+# Target rules for targets named parser
+
+# Build rule for target.
+parser: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 parser
+.PHONY : parser
+
+# fast build rule for target.
+parser/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/build
+.PHONY : parser/fast
+
+#=============================================================================
+# Target rules for targets named actions
+
+# Build rule for target.
+actions: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 actions
+.PHONY : actions
+
+# fast build rule for target.
+actions/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/build
+.PHONY : actions/fast
+
+src/actions.o: src/actions.c.o
+.PHONY : src/actions.o
+
+# target to build an object file
+src/actions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/src/actions.c.o
+.PHONY : src/actions.c.o
+
+src/actions.i: src/actions.c.i
+.PHONY : src/actions.i
+
+# target to preprocess a source file
+src/actions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/src/actions.c.i
+.PHONY : src/actions.c.i
+
+src/actions.s: src/actions.c.s
+.PHONY : src/actions.s
+
+# target to generate assembly for a file
+src/actions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/src/actions.c.s
+.PHONY : src/actions.c.s
+
+src/lexer.o: src/lexer.c.o
+.PHONY : src/lexer.o
+
+# target to build an object file
+src/lexer.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lexer.dir/build.make CMakeFiles/lexer.dir/src/lexer.c.o
+.PHONY : src/lexer.c.o
+
+src/lexer.i: src/lexer.c.i
+.PHONY : src/lexer.i
+
+# target to preprocess a source file
+src/lexer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lexer.dir/build.make CMakeFiles/lexer.dir/src/lexer.c.i
+.PHONY : src/lexer.c.i
+
+src/lexer.s: src/lexer.c.s
+.PHONY : src/lexer.s
+
+# target to generate assembly for a file
+src/lexer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lexer.dir/build.make CMakeFiles/lexer.dir/src/lexer.c.s
+.PHONY : src/lexer.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -153,6 +240,30 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/parser.o: src/parser.c.o
+.PHONY : src/parser.o
+
+# target to build an object file
+src/parser.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/src/parser.c.o
+.PHONY : src/parser.c.o
+
+src/parser.i: src/parser.c.i
+.PHONY : src/parser.i
+
+# target to preprocess a source file
+src/parser.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/src/parser.c.i
+.PHONY : src/parser.c.i
+
+src/parser.s: src/parser.c.s
+.PHONY : src/parser.s
+
+# target to generate assembly for a file
+src/parser.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parser.dir/build.make CMakeFiles/parser.dir/src/parser.c.s
+.PHONY : src/parser.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -161,10 +272,22 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... actions"
 	@echo "... compiler"
+	@echo "... lexer"
+	@echo "... parser"
+	@echo "... src/actions.o"
+	@echo "... src/actions.i"
+	@echo "... src/actions.s"
+	@echo "... src/lexer.o"
+	@echo "... src/lexer.i"
+	@echo "... src/lexer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/parser.o"
+	@echo "... src/parser.i"
+	@echo "... src/parser.s"
 .PHONY : help
 
 
