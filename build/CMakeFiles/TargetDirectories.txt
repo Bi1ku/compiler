@@ -1,0 +1,3 @@
+/Users/biiku/code/compiler/build/CMakeFiles/compiler.dir
+/Users/biiku/code/compiler/build/CMakeFiles/edit_cache.dir
+/Users/biiku/code/compiler/build/CMakeFiles/rebuild_cache.dir
