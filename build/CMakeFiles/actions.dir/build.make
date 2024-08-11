@@ -92,6 +92,7 @@ actions_EXTERNAL_OBJECTS =
 
 libactions.dylib: CMakeFiles/actions.dir/src/actions.c.o
 libactions.dylib: CMakeFiles/actions.dir/build.make
+libactions.dylib: libutils.dylib
 libactions.dylib: CMakeFiles/actions.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/biiku/code/compiler/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C shared library libactions.dylib"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/actions.dir/link.txt --verbose=$(VERBOSE)

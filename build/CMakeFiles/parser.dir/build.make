@@ -92,6 +92,7 @@ parser_EXTERNAL_OBJECTS =
 
 libparser.dylib: CMakeFiles/parser.dir/src/parser.c.o
 libparser.dylib: CMakeFiles/parser.dir/build.make
+libparser.dylib: libutils.dylib
 libparser.dylib: CMakeFiles/parser.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/biiku/code/compiler/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C shared library libparser.dylib"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/parser.dir/link.txt --verbose=$(VERBOSE)
