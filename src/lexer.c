@@ -1,6 +1,7 @@
 #include "../include/utils.h"
 #include <limits.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef enum {
@@ -92,10 +93,5 @@ int lexer() {
 
   fclose(file);
 
-  return 0;
-}
-
-int main() {
-  lexer();
   return 0;
 }
