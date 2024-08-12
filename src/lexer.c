@@ -1,4 +1,5 @@
 #include "../include/utils.h"
+#include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +11,7 @@ typedef enum {
   string,
   operator,
   newline,
+  boolean,
 } type;
 
 typedef struct {
@@ -38,6 +40,9 @@ void print_tokens(token *tokens, int length) {
     case newline:
       type = "newline";
       break;
+    case boolean:
+      type = "boolean";
+      break;
     }
 
     printf("{ type: %s, value: %s },\n", type, tokens[i].value);
@@ -46,22 +51,28 @@ void print_tokens(token *tokens, int length) {
 }
 
 int lexer() {
-  FILE *file = fopen("../tests/print.bi", "r");
+  FILE *file = fopen("../tests/test1.bi", "r");
 
-  char *keywords[] = {"print"};
-  int length = sizeof(keywords) / sizeof(keywords[0]);
+  char *keywords[] = {"print", "input"};
 
   token *tokens;
   int tokens_length = 0;
 
   char found_str = 0;
+  char end_line = 0;
 
   char *output;
-  while (fgets(output, INT_MAX, file)) {
+
+  while (fgets(output, 100, file)) {
     char *word = strtok(output, " ");
 
     while (word) {
-      if (in_array(keywords, word, length)) {
+      if (strchr(word, '\n')) {
+        word[strcspn(word, "\n")] = 0;
+        end_line = 1;
+      }
+
+      if (in_array(keywords, word, 2)) {
         tokens[tokens_length].type = keyword;
         strcpy(tokens[tokens_length].value, word);
         tokens_length++;
@@ -83,6 +94,25 @@ int lexer() {
       else if (found_str) {
         strcat(tokens[tokens_length].value, " ");
         strcat(tokens[tokens_length].value, word);
+      }
+
+      else if (strcmp(word, "true") || strcmp(word, "false")) {
+        tokens[tokens_length].type = boolean;
+        strcpy(tokens[tokens_length].value, word);
+        tokens_length++;
+      }
+
+      else if (isdigit(word[0])) {
+        tokens[tokens_length].type = number;
+        strcpy(tokens[tokens_length].value, word);
+        tokens_length++;
+      }
+
+      if (end_line) {
+        end_line = 0;
+        tokens[tokens_length].type = newline;
+        strcpy(tokens[tokens_length].value, "newline");
+        tokens_length++;
       }
 
       word = strtok(NULL, " ");
