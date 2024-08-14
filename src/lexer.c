@@ -51,17 +51,19 @@ void print_tokens(token *tokens, int length) {
 }
 
 int lexer() {
-  FILE *file = fopen("../tests/test1.bi", "r");
+  FILE *file = fopen("../tests/test2.bi", "r");
 
   char *keywords[] = {"print", "input"};
 
-  token *tokens;
+  token *tokens = malloc(100 * sizeof(token));
   int tokens_length = 0;
+
+  char *operators[] = {"+", "-", "*", "/"};
 
   char found_str = 0;
   char end_line = 0;
 
-  char *output;
+  char output[100];
 
   while (fgets(output, 100, file)) {
     char *word = strtok(output, " ");
@@ -84,7 +86,9 @@ int lexer() {
           strcat(tokens[tokens_length].value, word);
           found_str = 0;
           tokens_length++;
-        } else {
+        }
+
+        else {
           tokens[tokens_length].type = string;
           strcpy(tokens[tokens_length].value, word);
           found_str = 1;
@@ -108,6 +112,12 @@ int lexer() {
         tokens_length++;
       }
 
+      else if (in_array(operators, word, 4)) {
+        tokens[tokens_length].type = operator;
+        strcpy(tokens[tokens_length].value, word);
+        tokens_length++;
+      }
+
       if (end_line) {
         end_line = 0;
         tokens[tokens_length].type = newline;
@@ -120,6 +130,8 @@ int lexer() {
   }
 
   print_tokens(tokens, tokens_length);
+
+  free(tokens);
 
   fclose(file);
 
