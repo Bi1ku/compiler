@@ -55,10 +55,11 @@ int lexer() {
 
   char *keywords[] = {"print", "input"};
 
-  token *tokens = malloc(100 * sizeof(token));
+  token tokens[100];
   int tokens_length = 0;
 
-  char *operators[] = {"+", "-", "*", "/"};
+  char *operators[] = {"+", "-", "*",
+                       "/"}; // parsing from files results in string comparisons
 
   char found_str = 0;
   char end_line = 0;
@@ -74,7 +75,7 @@ int lexer() {
         end_line = 1;
       }
 
-      if (in_array(keywords, word, 2)) {
+      if (in_string_array(keywords, word, 2)) {
         tokens[tokens_length].type = keyword;
         strcpy(tokens[tokens_length].value, word);
         tokens_length++;
@@ -112,7 +113,7 @@ int lexer() {
         tokens_length++;
       }
 
-      else if (in_array(operators, word, 4)) {
+      else if (in_string_array(operators, word, 4)) {
         tokens[tokens_length].type = operator;
         strcpy(tokens[tokens_length].value, word);
         tokens_length++;
@@ -130,8 +131,6 @@ int lexer() {
   }
 
   print_tokens(tokens, tokens_length);
-
-  free(tokens);
 
   fclose(file);
 
