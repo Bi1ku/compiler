@@ -56,63 +56,73 @@ char lexer(token tokens[100], char path[]) {
   char *keywords[] = {"print", "input"};
   char *operations[] = {"+", "-", "*", "/"};
 
-  int tokens_length = 0;
+  char keywords_length = 2;
+  char tokens_length = 0;
+  char operations_length = 4;
+
   char found_str = 0;
+  char found_num = 0;
   char end_line = 0;
 
-  char output[100];
+  char line[100];
+  char word[100] = "";
 
-  while (fgets(output, 100, file)) {
-    char *word = strtok(output, " ");
+  while (fgets(line, 100, file)) {
+    for (int i = 0; i < strlen(line); i++) {
+      char letter[2] = {line[i], '\0'};
 
-    while (word) {
-      if (strchr(word, '\n')) {
-        word[strcspn(word, "\n")] = 0;
-        end_line = 1;
-      }
-
-      if (in_string_array(keywords, word, 2)) {
-        tokens[tokens_length].type = keyword;
-        strcpy(tokens[tokens_length].value, word);
+      if (!isdigit(letter[0]) && found_num == 1) {
+        found_num = 0;
+        strcpy(word, "");
         tokens_length++;
       }
 
-      else if (strchr(word, '"')) {
+      if (!found_str && !(strcmp(letter, " ") == 0)) {
+        if (strcmp(letter, "\n") == 0)
+          end_line = 1;
+        else
+          strcat(word, letter);
+      }
+
+      // KEYWORDS
+      if (in_string_array(keywords, word, keywords_length)) {
+        tokens[tokens_length].type = keyword;
+        strcpy(tokens[tokens_length].value, word);
+        strcpy(word, "");
+        tokens_length++;
+      }
+
+      // OPERATORS
+      else if (in_string_array(operations, word, operations_length)) {
+        tokens[tokens_length].type = operation;
+        strcpy(tokens[tokens_length].value, word);
+        strcpy(word, "");
+        tokens_length++;
+      }
+
+      // STRINGS
+      else if (strcmp(letter, "\"") == 0) {
         if (found_str) {
-          strcat(tokens[tokens_length].value, " ");
-          strcat(tokens[tokens_length].value, word);
+          strcpy(word, "");
           found_str = 0;
           tokens_length++;
         }
 
         else {
-          tokens[tokens_length].type = string;
-          strcpy(tokens[tokens_length].value, word);
           found_str = 1;
+          tokens[tokens_length].type = string;
         }
       }
 
       else if (found_str) {
-        strcat(tokens[tokens_length].value, " ");
-        strcat(tokens[tokens_length].value, word);
+        strcat(tokens[tokens_length].value, letter);
       }
 
-      else if (isdigit(word[0])) {
+      // NUMBERS
+      else if (isdigit(letter[0])) {
+        found_num = 1;
         tokens[tokens_length].type = number;
-        strcpy(tokens[tokens_length].value, word);
-        tokens_length++;
-      }
-
-      else if (in_string_array(operations, word, 4)) {
-        tokens[tokens_length].type = operation;
-        strcpy(tokens[tokens_length].value, word);
-        tokens_length++;
-      }
-
-      else if (strcmp(word, "true") == 0 || strcmp(word, "false") == 0) {
-        tokens[tokens_length].type = boolean;
-        strcpy(tokens[tokens_length].value, word);
-        tokens_length++;
+        strcat(tokens[tokens_length].value, letter);
       }
 
       if (end_line) {
@@ -121,8 +131,6 @@ char lexer(token tokens[100], char path[]) {
         strcpy(tokens[tokens_length].value, "newline");
         tokens_length++;
       }
-
-      word = strtok(NULL, " ");
     }
   }
 
