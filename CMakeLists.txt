@@ -17,7 +17,12 @@ target_link_libraries(${PROJECT_NAME} actions)
 
 # utils
 add_library(utils SHARED ./src/utils.c)
+
+# linking libraries and files
 target_link_libraries(${PROJECT_NAME} utils)
 target_link_libraries(lexer utils)
 target_link_libraries(parser utils)
 target_link_libraries(actions utils)
+target_link_libraries(parser lexer)
+
+

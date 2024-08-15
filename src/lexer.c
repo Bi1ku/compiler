@@ -138,5 +138,5 @@ char lexer(token tokens[100], char path[]) {
 
   fclose(file);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
