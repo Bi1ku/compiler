@@ -36,4 +36,10 @@ CMakeFiles/compiler.dir/src/main.c.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_off_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ssize_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_stdio.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_common.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_common.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_rsize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_errno_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/strings.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_strings.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_string.h

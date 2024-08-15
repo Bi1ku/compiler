@@ -50,8 +50,8 @@ void print_tokens(token *tokens, int length) {
   printf("]\n");
 }
 
-int lexer() {
-  FILE *file = fopen("../tests/test2.bi", "r");
+int lexer(char path[]) {
+  FILE *file = fopen(path, "r");
 
   char *keywords[] = {"print", "input"};
 
@@ -101,12 +101,6 @@ int lexer() {
         strcat(tokens[tokens_length].value, word);
       }
 
-      else if (strcmp(word, "true") || strcmp(word, "false")) {
-        tokens[tokens_length].type = boolean;
-        strcpy(tokens[tokens_length].value, word);
-        tokens_length++;
-      }
-
       else if (isdigit(word[0])) {
         tokens[tokens_length].type = number;
         strcpy(tokens[tokens_length].value, word);
@@ -115,6 +109,12 @@ int lexer() {
 
       else if (in_string_array(operators, word, 4)) {
         tokens[tokens_length].type = operator;
+        strcpy(tokens[tokens_length].value, word);
+        tokens_length++;
+      }
+
+      else if (strcmp(word, "true") == 0 || strcmp(word, "false") == 0) {
+        tokens[tokens_length].type = boolean;
         strcpy(tokens[tokens_length].value, word);
         tokens_length++;
       }

@@ -1,6 +1,6 @@
 #ifndef LEXER
 #define LEXER
 
-int lexer();
+int lexer(char path[]);
 
 #endif
