@@ -1,11 +1,9 @@
 #include "../include/lexer.h"
-#include <stdio.h>
-#include <string.h>
 
 int main() {
-  lexer("../tests/test2.bi");
+  token tokens[100];
 
-  printf("%d", strcmp("2", "true"));
+  lexer(tokens, "../tests/test2.bi");
 
   return 0;
 }

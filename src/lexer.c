@@ -9,7 +9,7 @@ typedef enum {
   keyword,
   number,
   string,
-  operator,
+  operation,
   newline,
   boolean,
 } type;
@@ -34,8 +34,8 @@ void print_tokens(token *tokens, int length) {
     case string:
       type = "string";
       break;
-    case operator:
-      type = "operator";
+    case operation:
+      type = "operation";
       break;
     case newline:
       type = "newline";
@@ -50,17 +50,13 @@ void print_tokens(token *tokens, int length) {
   printf("]\n");
 }
 
-int lexer(char path[]) {
+char lexer(token tokens[100], char path[]) {
   FILE *file = fopen(path, "r");
 
   char *keywords[] = {"print", "input"};
+  char *operations[] = {"+", "-", "*", "/"};
 
-  token tokens[100];
   int tokens_length = 0;
-
-  char *operators[] = {"+", "-", "*",
-                       "/"}; // parsing from files results in string comparisons
-
   char found_str = 0;
   char end_line = 0;
 
@@ -107,8 +103,8 @@ int lexer(char path[]) {
         tokens_length++;
       }
 
-      else if (in_string_array(operators, word, 4)) {
-        tokens[tokens_length].type = operator;
+      else if (in_string_array(operations, word, 4)) {
+        tokens[tokens_length].type = operation;
         strcpy(tokens[tokens_length].value, word);
         tokens_length++;
       }
