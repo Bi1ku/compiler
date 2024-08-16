@@ -71,8 +71,8 @@ char lexer(token tokens[100], char path[]) {
   char found_num = 0;
   char end_line = 0;
 
-  char line[100];
-  char word[100];
+  char line[100] = "";
+  char word[100] = "";
 
   while (fgets(line, 100, file)) {
     for (int i = 0; i < strlen(line); i++) {
