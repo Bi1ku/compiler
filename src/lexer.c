@@ -12,6 +12,7 @@ typedef enum {
   operation,
   newline,
   boolean,
+  container,
 } type;
 
 typedef struct {
@@ -43,6 +44,9 @@ void print_tokens(token *tokens, int length) {
     case boolean:
       type = "boolean";
       break;
+    case container:
+      type = "container";
+      break;
     }
 
     printf("{ type: %s, value: %s },\n", type, tokens[i].value);
@@ -53,12 +57,13 @@ void print_tokens(token *tokens, int length) {
 char lexer(token tokens[100], char path[]) {
   FILE *file = fopen(path, "r");
 
-  char *keywords[] = {"print", "input"};
+  char *keywords[] = {"print", "input", "loop"};
   char *operations[] = {"+", "-", "*", "/"};
+  char *containers[] = {"(", ")", "{", "}"};
 
-  char keywords_length = 2;
+  char keywords_length = 3;
   char tokens_length = 0;
-  char operations_length = 4;
+  char operations_length = 6;
 
   char found_str = 0;
   char found_num = 0;
@@ -93,7 +98,7 @@ char lexer(token tokens[100], char path[]) {
       }
 
       // OPERATORS
-      else if (in_string_array(operations, word, operations_length)) {
+      else if (in_string_array(operations, letter, operations_length)) {
         tokens[tokens_length].type = operation;
         strcpy(tokens[tokens_length].value, word);
         strcpy(word, "");
