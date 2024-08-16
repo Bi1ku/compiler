@@ -4,6 +4,5 @@ print (2 * 3)
 
 loop 5 {
   print "Hello, World!"
-}
 
 input 23*2

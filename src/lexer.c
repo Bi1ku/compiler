@@ -58,19 +58,21 @@ char lexer(token tokens[100], char path[]) {
   FILE *file = fopen(path, "r");
 
   char *keywords[] = {"print", "input", "loop"};
-  char *operations[] = {"+", "-", "*", "/"};
-  char *containers[] = {"(", ")", "{", "}"};
+  char *operations[] = {"+", "-", "*", "/", "(", ")"};
+  char *containers[] = {"{", "}"};
 
   char keywords_length = 3;
-  char tokens_length = 0;
   char operations_length = 6;
+  char containers_length = 2;
+  char tokens_length = 0;
 
   char found_str = 0;
+  char in_container = 0;
   char found_num = 0;
   char end_line = 0;
 
   char line[100];
-  char word[100] = "";
+  char word[100];
 
   while (fgets(line, 100, file)) {
     for (int i = 0; i < strlen(line); i++) {
@@ -100,7 +102,24 @@ char lexer(token tokens[100], char path[]) {
       // OPERATORS
       else if (in_string_array(operations, letter, operations_length)) {
         tokens[tokens_length].type = operation;
-        strcpy(tokens[tokens_length].value, word);
+        strcpy(tokens[tokens_length].value, letter);
+        strcpy(word, "");
+        tokens_length++;
+      }
+
+      // CONTAINERS
+      if (strcmp(letter, "{") == 0) {
+        in_container = 1;
+        tokens[tokens_length].type = container;
+        strcpy(tokens[tokens_length].value, letter);
+        strcpy(word, "");
+        tokens_length++;
+      }
+
+      else if (strcmp(letter, "}") == 0) {
+        in_container = 0;
+        tokens[tokens_length].type = container;
+        strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
         tokens_length++;
       }
@@ -132,9 +151,12 @@ char lexer(token tokens[100], char path[]) {
 
       if (end_line) {
         end_line = 0;
-        tokens[tokens_length].type = newline;
-        strcpy(tokens[tokens_length].value, "newline");
-        tokens_length++;
+
+        if (!in_container) {
+          tokens[tokens_length].type = newline;
+          strcpy(tokens[tokens_length].value, "newline");
+          tokens_length++;
+        }
       }
     }
   }
