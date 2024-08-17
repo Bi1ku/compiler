@@ -15,6 +15,6 @@ typedef struct {
   char value[100];
 } token;
 
-int lexer(token tokens[], char path[]);
+int lexer(token tokens[], char path[], int tokens_length);
 
 #endif

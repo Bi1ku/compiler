@@ -54,7 +54,7 @@ void print_tokens(token *tokens, int length) {
   printf("]\n");
 }
 
-char lexer(token tokens[100], char path[]) {
+int lexer(token tokens[100], char path[]) {
   FILE *file = fopen(path, "r");
 
   char *keywords[] = {"print", "input", "loop"};
@@ -64,7 +64,7 @@ char lexer(token tokens[100], char path[]) {
   char keywords_length = 3;
   char operations_length = 6;
   char containers_length = 2;
-  char tokens_length = 0;
+  int tokens_length = 0;
 
   char found_str = 0;
   char in_container = 0;
@@ -165,5 +165,5 @@ char lexer(token tokens[100], char path[]) {
 
   fclose(file);
 
-  return EXIT_SUCCESS;
+  return tokens_length;
 }
