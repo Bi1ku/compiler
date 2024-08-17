@@ -1,15 +1,16 @@
 #include "../include/lexer.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct {
+struct node {
   token value;
   struct node *left;
   struct node *right;
-} node;
+};
 
-node *create_node(token value) {
-  node *result = malloc(sizeof(node));
+struct node *create_node(token value) {
+  struct node *result = malloc(sizeof(struct node));
 
   if (result != NULL) {
     result->value = value;
@@ -20,19 +21,38 @@ node *create_node(token value) {
   return result;
 }
 
+void create_ast(struct node *node, token line[], int line_length) {
+  for (int i = 0; i < line_length; i++) {
+    if (line[i].type == keyword) {
+      node->left = NULL;
+      node->right = NULL;
+      node->value = line[i];
+    }
+
+    // ORDER OF TOKEN PRECEDENCE
+  }
+}
+
 char parser(token tokens[], int tokens_length) {
-  node **trees = malloc(0);
+  struct node **trees = malloc(0);
   int trees_length = 0;
 
-  token(*lines)[] = malloc(0);
-  int lines_length = 0;
+  token line[100] = {};
+  int line_length = 0;
 
   for (int i = 0; i < tokens_length; i++) {
-    if (tokens[i].type == newline) {
-      trees = realloc(trees, sizeof(node) * (i + 1));
+    if (tokens[i].type == newline && tokens[i + 1].type != newline) {
+      trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
+      create_ast(trees[trees_length], line, line_length);
+      memset(line, 0, sizeof(line));
+      line_length = 0;
       trees_length++;
-      lines_length = 0;
+    }
+
+    else {
+      line[line_length] = tokens[i];
+      line_length++;
     }
   }
 
@@ -40,7 +60,6 @@ char parser(token tokens[], int tokens_length) {
     free(trees[i]);
   }
   free(trees);
-  free(lines);
 
   return EXIT_SUCCESS;
 }
