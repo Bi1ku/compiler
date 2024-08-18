@@ -21,16 +21,25 @@ struct node *create_node(token value) {
   return result;
 }
 
-void create_ast(struct node *node, token line[], int line_length) {
-  for (int i = 0; i < line_length; i++) {
-    if (line[i].type == keyword) {
-      node->left = NULL;
-      node->right = NULL;
-      node->value = line[i];
-    }
+double calculate(char arithmetics, int arithmetics_length) { return 0; }
 
-    // ORDER OF TOKEN PRECEDENCE
+void create_ast(struct node *node, token line[], int line_length) {
+  struct node *curr_node = node;
+  char arithmetics[100][100] = {};
+  int arithmetics_length = 0;
+
+  for (int i = 0; i < line_length; i++) {
+    if (line[i].type == operation || line[i].type == number) {
+      strcpy(arithmetics[arithmetics_length], line[i].value);
+      arithmetics_length++;
+    }
   }
+
+  for (int i = 0; i < arithmetics_length; i++) {
+    printf("Val: %s \n", arithmetics[i]);
+  }
+
+  printf("NEWLINE \n");
 }
 
 char parser(token tokens[], int tokens_length) {
@@ -41,11 +50,10 @@ char parser(token tokens[], int tokens_length) {
   int line_length = 0;
 
   for (int i = 0; i < tokens_length; i++) {
-    if (tokens[i].type == newline && tokens[i + 1].type != newline) {
+    if (tokens[i].type == newline & tokens[i + 1].type != newline) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
       create_ast(trees[trees_length], line, line_length);
-      memset(line, 0, sizeof(line));
       line_length = 0;
       trees_length++;
     }

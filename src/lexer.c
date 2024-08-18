@@ -161,7 +161,7 @@ int lexer(token tokens[100], char path[]) {
     }
   }
 
-  //  print_tokens(tokens, tokens_length);
+  print_tokens(tokens, tokens_length);
 
   fclose(file);
 
