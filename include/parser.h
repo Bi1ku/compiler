@@ -1,7 +1,7 @@
 #ifndef PARSER
 #define PARSER
 
-#include "lexer.h"
+#include "types.h"
 
 int parser(token tokens[], int tokens_length);
 

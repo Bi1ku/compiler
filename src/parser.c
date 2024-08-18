@@ -1,13 +1,7 @@
-#include "../include/lexer.h"
+#include "../include/types.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-struct node {
-  token value;
-  struct node *left;
-  struct node *right;
-};
 
 struct node *create_node(token value) {
   struct node *result = malloc(sizeof(struct node));
@@ -21,25 +15,21 @@ struct node *create_node(token value) {
   return result;
 }
 
-double calculate(char arithmetics, int arithmetics_length) { return 0; }
+void set_branch(struct node *node, token token) {
+  if (node->right)
+    node->left = create_node(token);
+  else
+    node->right = create_node(token);
+}
 
 void create_ast(struct node *node, token line[], int line_length) {
-  struct node *curr_node = node;
-  char arithmetics[100][100] = {};
-  int arithmetics_length = 0;
-
   for (int i = 0; i < line_length; i++) {
-    if (line[i].type == operation || line[i].type == number) {
-      strcpy(arithmetics[arithmetics_length], line[i].value);
-      arithmetics_length++;
+    if (line[i].type == keyword) {
+      node->value = line[i];
     }
-  }
 
-  for (int i = 0; i < arithmetics_length; i++) {
-    printf("Val: %s \n", arithmetics[i]);
+    set_branch(node, line[i]);
   }
-
-  printf("NEWLINE \n");
 }
 
 char parser(token tokens[], int tokens_length) {

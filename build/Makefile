@@ -156,17 +156,17 @@ parser/fast:
 .PHONY : parser/fast
 
 #=============================================================================
-# Target rules for targets named actions
+# Target rules for targets named generator
 
 # Build rule for target.
-actions: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 actions
-.PHONY : actions
+generator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 generator
+.PHONY : generator
 
 # fast build rule for target.
-actions/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/build
-.PHONY : actions/fast
+generator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/build
+.PHONY : generator/fast
 
 #=============================================================================
 # Target rules for targets named utils
@@ -181,29 +181,29 @@ utils/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/utils.dir/build.make CMakeFiles/utils.dir/build
 .PHONY : utils/fast
 
-src/actions.o: src/actions.c.o
-.PHONY : src/actions.o
+src/generator.o: src/generator.c.o
+.PHONY : src/generator.o
 
 # target to build an object file
-src/actions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/src/actions.c.o
-.PHONY : src/actions.c.o
+src/generator.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/src/generator.c.o
+.PHONY : src/generator.c.o
 
-src/actions.i: src/actions.c.i
-.PHONY : src/actions.i
+src/generator.i: src/generator.c.i
+.PHONY : src/generator.i
 
 # target to preprocess a source file
-src/actions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/src/actions.c.i
-.PHONY : src/actions.c.i
+src/generator.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/src/generator.c.i
+.PHONY : src/generator.c.i
 
-src/actions.s: src/actions.c.s
-.PHONY : src/actions.s
+src/generator.s: src/generator.c.s
+.PHONY : src/generator.s
 
 # target to generate assembly for a file
-src/actions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/actions.dir/build.make CMakeFiles/actions.dir/src/actions.c.s
-.PHONY : src/actions.c.s
+src/generator.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/src/generator.c.s
+.PHONY : src/generator.c.s
 
 src/lexer.o: src/lexer.c.o
 .PHONY : src/lexer.o
@@ -309,14 +309,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... actions"
 	@echo "... compiler"
+	@echo "... generator"
 	@echo "... lexer"
 	@echo "... parser"
 	@echo "... utils"
-	@echo "... src/actions.o"
-	@echo "... src/actions.i"
-	@echo "... src/actions.s"
+	@echo "... src/generator.o"
+	@echo "... src/generator.i"
+	@echo "... src/generator.s"
 	@echo "... src/lexer.o"
 	@echo "... src/lexer.i"
 	@echo "... src/lexer.s"

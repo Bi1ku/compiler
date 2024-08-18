@@ -1,53 +1,9 @@
+#include "../include/types.h"
 #include "../include/utils.h"
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
-
-typedef enum {
-  keyword,
-  expression,
-  string,
-  newline,
-  boolean,
-  container,
-} type;
-
-typedef struct {
-  type type;
-  char value[100];
-} token;
-
-void print_tokens(token *tokens, int length) {
-  printf("[\n");
-  for (int i = 0; i < length; i++) {
-    char *type;
-
-    switch (tokens[i].type) {
-    case keyword:
-      type = "keyword";
-      break;
-    case expression:
-      type = "expression";
-      break;
-    case string:
-      type = "string";
-      break;
-    case newline:
-      type = "newline";
-      break;
-    case boolean:
-      type = "boolean";
-      break;
-    case container:
-      type = "container";
-      break;
-    }
-
-    printf("{ type: %s, value: %s },\n", type, tokens[i].value);
-  }
-  printf("]\n");
-}
 
 int lexer(token tokens[100], char path[]) {
   FILE *file = fopen(path, "r");
@@ -66,6 +22,7 @@ int lexer(token tokens[100], char path[]) {
   char found_expression = 0;
   char end_line = 0;
 
+  // TODO: Make dynamic?
   char line[100] = "";
   char word[100] = "";
 

@@ -1,6 +1,6 @@
 CMakeFiles/parser.dir/src/parser.c.o: \
   /Users/biiku/code/compiler/src/parser.c \
-  /Users/biiku/code/compiler/src/../include/lexer.h \
+  /Users/biiku/code/compiler/src/../include/types.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/cdefs.h \

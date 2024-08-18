@@ -11,9 +11,9 @@ target_link_libraries(${PROJECT_NAME} lexer)
 add_library(parser SHARED ./src/parser.c)
 target_link_libraries(${PROJECT_NAME} parser)
 
-# actions
-add_library(actions SHARED ./src/actions.c)
-target_link_libraries(${PROJECT_NAME} actions)
+# generator 
+add_library(generator SHARED ./src/generator.c)
+target_link_libraries(${PROJECT_NAME} generator)
 
 # utils
 add_library(utils SHARED ./src/utils.c)
@@ -22,7 +22,4 @@ add_library(utils SHARED ./src/utils.c)
 target_link_libraries(${PROJECT_NAME} utils)
 target_link_libraries(lexer utils)
 target_link_libraries(parser utils)
-target_link_libraries(actions utils)
-target_link_libraries(parser lexer)
-
-
+target_link_libraries(generator utils)

@@ -50,6 +50,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/compiler.dir/DependInfo.cmake"
   "CMakeFiles/lexer.dir/DependInfo.cmake"
   "CMakeFiles/parser.dir/DependInfo.cmake"
-  "CMakeFiles/actions.dir/DependInfo.cmake"
+  "CMakeFiles/generator.dir/DependInfo.cmake"
   "CMakeFiles/utils.dir/DependInfo.cmake"
   )

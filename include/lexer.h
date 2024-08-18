@@ -1,19 +1,7 @@
 #ifndef LEXER
 #define LEXER
 
-typedef enum {
-  keyword,
-  number,
-  string,
-  operation,
-  newline,
-  boolean,
-} type;
-
-typedef struct {
-  type type;
-  char value[100];
-} token;
+#include "types.h"
 
 int lexer(token tokens[], char path[], int tokens_length);
 
