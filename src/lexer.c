@@ -2,14 +2,12 @@
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 typedef enum {
   keyword,
-  number,
+  expression,
   string,
-  operation,
   newline,
   boolean,
   container,
@@ -29,14 +27,11 @@ void print_tokens(token *tokens, int length) {
     case keyword:
       type = "keyword";
       break;
-    case number:
-      type = "number";
+    case expression:
+      type = "expression";
       break;
     case string:
       type = "string";
-      break;
-    case operation:
-      type = "operation";
       break;
     case newline:
       type = "newline";
@@ -68,7 +63,7 @@ int lexer(token tokens[100], char path[]) {
 
   char found_str = 0;
   char in_container = 0;
-  char found_num = 0;
+  char found_expression = 0;
   char end_line = 0;
 
   char line[100] = "";
@@ -78,31 +73,29 @@ int lexer(token tokens[100], char path[]) {
     for (int i = 0; i < strlen(line); i++) {
       char letter[2] = {line[i], '\0'};
 
-      if (!isdigit(letter[0]) && found_num == 1) {
-        found_num = 0;
-        strcpy(word, "");
-        tokens_length++;
-      }
+      if (!(strcmp(letter, " ") == 0)) {
 
-      if (!found_str && !(strcmp(letter, " ") == 0)) {
-        if (strcmp(letter, "\n") == 0)
-          end_line = 1;
-        else
-          strcat(word, letter);
+        // TRACK/PERSIST EXPRESSIONS
+        if (!isdigit(letter[0]) &&
+            !in_string_array(operations, letter, operations_length) &&
+            found_expression) {
+          found_expression = 0;
+          tokens_length++;
+        }
+
+        // TRACK/PERSIST STRINGS
+        if (!found_str) {
+          if (strcmp(letter, "\n") == 0)
+            end_line = 1;
+          else
+            strcat(word, letter);
+        }
       }
 
       // KEYWORDS
       if (in_string_array(keywords, word, keywords_length)) {
         tokens[tokens_length].type = keyword;
         strcpy(tokens[tokens_length].value, word);
-        strcpy(word, "");
-        tokens_length++;
-      }
-
-      // OPERATORS
-      else if (in_string_array(operations, letter, operations_length)) {
-        tokens[tokens_length].type = operation;
-        strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
         tokens_length++;
       }
@@ -142,10 +135,16 @@ int lexer(token tokens[100], char path[]) {
         strcat(tokens[tokens_length].value, letter);
       }
 
-      // NUMBERS
+      // EXPRESSIONS
       else if (isdigit(letter[0])) {
-        found_num = 1;
-        tokens[tokens_length].type = number;
+        found_expression = 1;
+        tokens[tokens_length].type = expression;
+        strcat(tokens[tokens_length].value, letter);
+      }
+
+      else if (in_string_array(operations, letter, operations_length)) {
+        found_expression = 1;
+        tokens[tokens_length].type = expression;
         strcat(tokens[tokens_length].value, letter);
       }
 
