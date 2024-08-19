@@ -43,3 +43,31 @@ void print_tokens(token *tokens, int length) {
   }
   printf("]\n");
 }
+
+void print_tree(struct node *node) {
+  if (node != NULL) {
+    printf("NODE VALUE: %s \n", node->value.value);
+
+    if (node->right != NULL)
+      printf("RIGHT NODE VALUE: %s \n", node->right->value.value);
+    else
+      printf("RIGHT NODE VALUE: XX[NULL]XX \n");
+
+    if (node->left != NULL)
+      printf("LEFT NODE VALUE: %s \n", node->left->value.value);
+    else
+      printf("LEFT NDOE VALUE: XX[NULL]XX \n");
+
+    printf("-----------NEW NODE-------------\n");
+    print_tree(node->left);
+    print_tree(node->right);
+  }
+}
+
+void print_trees(struct node **trees, int trees_length) {
+  for (int i = 0; i < trees_length; i++) {
+    printf("-----------NEW NODE-------------\n");
+    print_tree(trees[i]);
+    printf("\n---------------NEW TREE--------------\n\n");
+  }
+}

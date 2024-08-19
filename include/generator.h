@@ -1,6 +1,8 @@
 #ifndef GENERATOR
 #define GENERATOR
 
-char generate();
+#include "types.h"
+
+char generate(struct node **trees, int tree_length);
 
 #endif

@@ -1,4 +1,5 @@
 #include "../include/types.h"
+#include "../include/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,6 +23,7 @@ void set_branch(struct node *node, token token) {
     node->right = create_node(token);
 }
 
+// TODO: Recursion or something later for more advanced syntax and parsing
 void create_ast(struct node *node, token line[], int line_length) {
   for (int i = 0; i < line_length; i++) {
     if (line[i].type == keyword) {
@@ -32,8 +34,7 @@ void create_ast(struct node *node, token line[], int line_length) {
   }
 }
 
-char parser(token tokens[], int tokens_length) {
-  struct node **trees = malloc(0);
+void parser(token tokens[], int tokens_length, struct node **trees) {
   int trees_length = 0;
 
   token line[100] = {};
@@ -54,10 +55,10 @@ char parser(token tokens[], int tokens_length) {
     }
   }
 
+  print_trees(trees, trees_length);
+
   for (int i = 0; i < trees_length; i++) {
     free(trees[i]);
   }
   free(trees);
-
-  return EXIT_SUCCESS;
 }

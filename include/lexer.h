@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-int lexer(token tokens[], char path[], int tokens_length);
+int lexer(token tokens[], char path[]);
 
 #endif

@@ -6,13 +6,12 @@
 
 int main() {
   token tokens[100] = {};
+  int tokens_length = lexer(tokens, "../tests/test2.bi");
 
-  // TODO: fix this is hella jank
-  int tokens_length = lexer(tokens, "../tests/test2.bi", tokens_length);
+  struct node **trees = malloc(0);
+  parser(tokens, tokens_length, trees);
 
-  parser(tokens, tokens_length);
-
-  generate();
+  generate(trees, tokens_length);
 
   return EXIT_SUCCESS;
 }

@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-int parser(token tokens[], int tokens_length);
+void parser(token tokens[], int tokens_length, struct node **trees);
 
 #endif
