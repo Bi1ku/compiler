@@ -7,4 +7,4 @@ loop 5 {
 }
 
 
-input 23*2
+input "What is 23 * 2?" 

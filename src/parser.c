@@ -25,13 +25,24 @@ void set_branch(struct node *node, token token) {
 
 // TODO: Recursion or something later for more advanced syntax and parsing
 void create_ast(struct node *node, token line[], int line_length) {
+  token *temp = malloc(0);
+
   for (int i = 0; i < line_length; i++) {
+    if (line[i].type == container) {
+      temp = slice_tokens(line, i, line_length);
+      // create_ast(node->right, temp, line_length); pls fix this
+      break;
+    }
+
     if (line[i].type == keyword) {
       node->value = line[i];
     }
 
-    set_branch(node, line[i]);
+    if (i != 0)
+      set_branch(node, line[i]);
   }
+
+  free(temp);
 }
 
 void parser(token tokens[], int tokens_length, struct node **trees) {
@@ -41,17 +52,20 @@ void parser(token tokens[], int tokens_length, struct node **trees) {
   int line_length = 0;
 
   for (int i = 0; i < tokens_length; i++) {
-    if (tokens[i].type == newline & tokens[i + 1].type != newline) {
+    if (tokens[i].type == newline && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
       create_ast(trees[trees_length], line, line_length);
+      print_tree(trees[trees_length]);
       line_length = 0;
       trees_length++;
     }
 
     else {
-      line[line_length] = tokens[i];
-      line_length++;
+      if (tokens[i].type != newline) {
+        line[line_length] = tokens[i];
+        line_length++;
+      }
     }
   }
 

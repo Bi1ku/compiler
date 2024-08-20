@@ -32,20 +32,21 @@ int lexer(token tokens[100], char path[]) {
 
       if (!(strcmp(letter, " ") == 0)) {
 
-        // TRACK/PERSIST EXPRESSIONS
-        if (!isdigit(letter[0]) &&
-            !in_string_array(operations, letter, operations_length) &&
-            found_expression) {
-          found_expression = 0;
-          tokens_length++;
-        }
-
         // TRACK/PERSIST STRINGS
         if (!found_str) {
           if (strcmp(letter, "\n") == 0)
             end_line = 1;
           else
             strcat(word, letter);
+        }
+
+        // TRACK/PERSIST EXPRESSIONS
+        if (!isdigit(letter[0]) &&
+            !in_string_array(operations, letter, operations_length) &&
+            found_expression) {
+          found_expression = 0;
+          tokens_length++;
+          strcpy(word, "");
         }
       }
 
@@ -117,7 +118,7 @@ int lexer(token tokens[100], char path[]) {
     }
   }
 
-  // print_tokens(tokens, tokens_length);
+  print_tokens(tokens, tokens_length);
 
   fclose(file);
 

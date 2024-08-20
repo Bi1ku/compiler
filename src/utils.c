@@ -1,6 +1,7 @@
 #include "../include/types.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 char in_string_array(char *arr[], char str[], int length) {
@@ -70,4 +71,14 @@ void print_trees(struct node **trees, int trees_length) {
     print_tree(trees[i]);
     printf("\n---------------NEW TREE--------------\n\n");
   }
+}
+
+token *slice_tokens(token tokens[], int start, int end) {
+  token *res = malloc(sizeof(token) * start - end);
+
+  for (int i = start; i < end; i++) {
+    res[i - start] = tokens[i];
+  }
+
+  return res;
 }
