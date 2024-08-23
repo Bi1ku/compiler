@@ -28,6 +28,7 @@ void print_tokens(token *tokens, int length) {
       break;
     case BinOpr:
       type = "OPERATION";
+      break;
     case Str:
       type = "STRING";
       break;

@@ -29,7 +29,6 @@ struct node *create_node(token value) {
   return result;
 }
 
-// TODO: Implement binary tree parser
 int get_precedence(char value[]) {
   if (strcmp(value, "+") || strcmp(value, "-"))
     return 1;
@@ -37,8 +36,10 @@ int get_precedence(char value[]) {
   else if (strcmp(value, "*") || strcmp(value, "/"))
     return 2;
 
-  else
+  else if (strcmp(value, "**"))
     return 3;
+
+  return 0;
 }
 
 struct node *parse_primary();
@@ -47,30 +48,48 @@ struct node *parse_expression(int precedence_thresh) {
   struct node *left = parse_primary();
 
   while (1) {
-    if (get_precedence(line[idx].value) < precedence_thresh)
+    if (line_length < idx)
       break;
+
+    token peek = line[idx];
+
+    int curr_precedence = get_precedence(peek.value);
+    if (curr_precedence < precedence_thresh)
+      break;
+
+    idx++;
+
+    struct node *right = parse_expression(curr_precedence + 1);
+    struct node *temp = left;
+
+    left = create_node(peek);
+    left->left = temp;
+    left->right = right;
   }
-  return create_node(line[idx]);
+
+  return left;
 };
 
 struct node *parse_primary() {
+  struct node *node;
+
   if (line[idx].type == Num) {
+    node = create_node(line[idx]);
     idx++;
-    return create_node(line[idx]);
   }
 
-  else if (line[idx].type == Cont) {
+  else if (strcmp(line[idx].value, "(") == 0) {
     idx++;
-    struct node *expr = parse_expression(0);
+    node = parse_expression(0);
     idx++;
-    return expr;
   }
 
-  else
-    return EXIT_FAILURE;
+  return node;
 }
 
-void parse_statement(struct node *node) {};
+void parse_line(struct node *node) {
+  // combine arithmetic parser with regular
+};
 
 void parser(token tokens[], int tokens_length, struct node **trees) {
   int trees_length = 0;
@@ -79,6 +98,7 @@ void parser(token tokens[], int tokens_length, struct node **trees) {
     if (tokens[i].type == End && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
+      trees[trees_length] = parse_expression(0);
       line_length = 0;
       trees_length++;
     }
