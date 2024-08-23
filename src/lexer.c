@@ -19,10 +19,9 @@ int lexer(token tokens[100], char path[]) {
 
   char found_str = 0;
   char in_container = 0;
-  char found_expression = 0;
+  char found_num = 0;
   char end_line = 0;
 
-  // TODO: Make dynamic?
   char line[100] = "";
   char word[100] = "";
 
@@ -30,30 +29,31 @@ int lexer(token tokens[100], char path[]) {
     for (int i = 0; i < strlen(line); i++) {
       char letter[2] = {line[i], '\0'};
 
-      if (!(strcmp(letter, " ") == 0)) {
+      if (!isdigit(letter[0]) && found_num == 1) {
+        found_num = 0;
+        strcpy(word, "");
+        tokens_length++;
+      }
 
-        // TRACK/PERSIST STRINGS
-        if (!found_str) {
-          if (strcmp(letter, "\n") == 0)
-            end_line = 1;
-          else
-            strcat(word, letter);
-        }
-
-        // TRACK/PERSIST EXPRESSIONS
-        if (!isdigit(letter[0]) &&
-            !in_string_array(operations, letter, operations_length) &&
-            found_expression) {
-          found_expression = 0;
-          tokens_length++;
-          strcpy(word, "");
-        }
+      if (!found_str && !(strcmp(letter, " ") == 0)) {
+        if (strcmp(letter, "\n") == 0)
+          end_line = 1;
+        else
+          strcat(word, letter);
       }
 
       // KEYWORDS
       if (in_string_array(keywords, word, keywords_length)) {
-        tokens[tokens_length].type = keyword;
+        tokens[tokens_length].type = Keyword;
         strcpy(tokens[tokens_length].value, word);
+        strcpy(word, "");
+        tokens_length++;
+      }
+
+      // OPERATORS
+      else if (in_string_array(operations, letter, operations_length)) {
+        tokens[tokens_length].type = BinOpr;
+        strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
         tokens_length++;
       }
@@ -61,7 +61,7 @@ int lexer(token tokens[100], char path[]) {
       // CONTAINERS
       if (strcmp(letter, "{") == 0) {
         in_container = 1;
-        tokens[tokens_length].type = container;
+        tokens[tokens_length].type = Cont;
         strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
         tokens_length++;
@@ -69,7 +69,7 @@ int lexer(token tokens[100], char path[]) {
 
       else if (strcmp(letter, "}") == 0) {
         in_container = 0;
-        tokens[tokens_length].type = container;
+        tokens[tokens_length].type = Cont;
         strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
         tokens_length++;
@@ -85,7 +85,7 @@ int lexer(token tokens[100], char path[]) {
 
         else {
           found_str = 1;
-          tokens[tokens_length].type = string;
+          tokens[tokens_length].type = Str;
         }
       }
 
@@ -93,16 +93,10 @@ int lexer(token tokens[100], char path[]) {
         strcat(tokens[tokens_length].value, letter);
       }
 
-      // EXPRESSIONS
+      // NUMBERS
       else if (isdigit(letter[0])) {
-        found_expression = 1;
-        tokens[tokens_length].type = expression;
-        strcat(tokens[tokens_length].value, letter);
-      }
-
-      else if (in_string_array(operations, letter, operations_length)) {
-        found_expression = 1;
-        tokens[tokens_length].type = expression;
+        found_num = 1;
+        tokens[tokens_length].type = Num;
         strcat(tokens[tokens_length].value, letter);
       }
 
@@ -110,7 +104,7 @@ int lexer(token tokens[100], char path[]) {
         end_line = 0;
 
         if (!in_container) {
-          tokens[tokens_length].type = newline;
+          tokens[tokens_length].type = End;
           strcpy(tokens[tokens_length].value, "newline");
           tokens_length++;
         }

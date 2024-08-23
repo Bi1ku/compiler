@@ -4,6 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+precedence pemdas = {
+    .add = 1,
+    .subtract = 1,
+    .multiply = 2,
+    .divide = 2,
+    .exponent = 3,
+    .parenthesis = 4,
+};
+
+int idx = 0;
+token line[100] = {};
+int line_length = 0;
+
 struct node *create_node(token value) {
   struct node *result = malloc(sizeof(struct node));
 
@@ -16,53 +29,62 @@ struct node *create_node(token value) {
   return result;
 }
 
-void set_branch(struct node *node, token token) {
-  if (node->right)
-    node->left = create_node(token);
+// TODO: Implement binary tree parser
+int get_precedence(char value[]) {
+  if (strcmp(value, "+") || strcmp(value, "-"))
+    return 1;
+
+  else if (strcmp(value, "*") || strcmp(value, "/"))
+    return 2;
+
   else
-    node->right = create_node(token);
+    return 3;
 }
 
-// TODO: Recursion or something later for more advanced syntax and parsing
-void create_ast(struct node *node, token line[], int line_length) {
-  token *temp = malloc(0);
+struct node *parse_primary();
 
-  for (int i = 0; i < line_length; i++) {
-    if (line[i].type == container) {
-      temp = slice_tokens(line, i, line_length);
-      // create_ast(node->right, temp, line_length); pls fix this
+struct node *parse_expression(int precedence_thresh) {
+  struct node *left = parse_primary();
+
+  while (1) {
+    if (get_precedence(line[idx].value) < precedence_thresh)
       break;
-    }
+  }
+  return create_node(line[idx]);
+};
 
-    if (line[i].type == keyword) {
-      node->value = line[i];
-    }
-
-    if (i != 0)
-      set_branch(node, line[i]);
+struct node *parse_primary() {
+  if (line[idx].type == Num) {
+    idx++;
+    return create_node(line[idx]);
   }
 
-  free(temp);
+  else if (line[idx].type == Cont) {
+    idx++;
+    struct node *expr = parse_expression(0);
+    idx++;
+    return expr;
+  }
+
+  else
+    return EXIT_FAILURE;
 }
+
+void parse_statement(struct node *node) {};
 
 void parser(token tokens[], int tokens_length, struct node **trees) {
   int trees_length = 0;
 
-  token line[100] = {};
-  int line_length = 0;
-
   for (int i = 0; i < tokens_length; i++) {
-    if (tokens[i].type == newline && line_length > 0) {
+    if (tokens[i].type == End && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
-      create_ast(trees[trees_length], line, line_length);
-      print_tree(trees[trees_length]);
       line_length = 0;
       trees_length++;
     }
 
     else {
-      if (tokens[i].type != newline) {
+      if (tokens[i].type != End) {
         line[line_length] = tokens[i];
         line_length++;
       }

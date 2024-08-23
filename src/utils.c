@@ -20,23 +20,25 @@ void print_tokens(token *tokens, int length) {
     char *type;
 
     switch (tokens[i].type) {
-    case keyword:
-      type = "keyword";
+    case Keyword:
+      type = "KEYWORD";
       break;
-    case expression:
-      type = "expression";
+    case Num:
+      type = "NUMBER";
       break;
-    case string:
-      type = "string";
+    case BinOpr:
+      type = "OPERATION";
+    case Str:
+      type = "STRING";
       break;
-    case newline:
-      type = "newline";
+    case End:
+      type = "END";
       break;
-    case boolean:
-      type = "boolean";
+    case Bool:
+      type = "BOOLEAN";
       break;
-    case container:
-      type = "container";
+    case Cont:
+      type = "CONTAINER";
       break;
     }
 
