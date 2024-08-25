@@ -1,1 +1,1 @@
-Compiler project to learn C
+Interpreter project to learn C
