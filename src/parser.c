@@ -30,16 +30,16 @@ struct node *create_node(token value) {
 }
 
 int get_precedence(char value[]) {
-  if (strcmp(value, "+") || strcmp(value, "-"))
+  if (strcmp(value, "+") == 0 || strcmp(value, "-") == 0)
     return 1;
 
-  else if (strcmp(value, "*") || strcmp(value, "/"))
+  else if (strcmp(value, "*") == 0 || strcmp(value, "/") == 0)
     return 2;
 
-  else if (strcmp(value, "**"))
+  else if (strcmp(value, "**") == 0)
     return 3;
 
-  return 0;
+  return -1;
 }
 
 struct node *parse_primary();
@@ -79,6 +79,7 @@ struct node *parse_primary() {
   }
 
   else if (strcmp(line[idx].value, "(") == 0) {
+    printf("VALUE: %s \n", line[idx].value);
     idx++;
     node = parse_expression(0);
     idx++;
@@ -98,7 +99,8 @@ void parser(token tokens[], int tokens_length, struct node **trees) {
     if (tokens[i].type == End && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
-      trees[trees_length] = parse_expression(0);
+      trees[trees_length] = parse_expression(0); // arithmetic parser
+      // parse_line(trees[trees_length]);
       line_length = 0;
       trees_length++;
     }
