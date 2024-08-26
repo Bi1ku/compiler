@@ -57,10 +57,10 @@ RM = /opt/homebrew/Cellar/cmake/3.30.2/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/biiku/code/compiler
+CMAKE_SOURCE_DIR = /Users/biiku/code/interpreter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/biiku/code/compiler/build
+CMAKE_BINARY_DIR = /Users/biiku/code/interpreter/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/biiku/code/compiler/build/CMakeFiles /Users/biiku/code/compiler/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/biiku/code/interpreter/build/CMakeFiles /Users/biiku/code/interpreter/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/biiku/code/compiler/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/biiku/code/interpreter/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,17 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named compiler
+# Target rules for targets named interpreter
 
 # Build rule for target.
-compiler: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compiler
-.PHONY : compiler
+interpreter: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter
+.PHONY : interpreter
 
 # fast build rule for target.
-compiler/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/build
-.PHONY : compiler/fast
+interpreter/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/interpreter.dir/build.make CMakeFiles/interpreter.dir/build
+.PHONY : interpreter/fast
 
 #=============================================================================
 # Target rules for targets named lexer
@@ -234,7 +234,7 @@ src/main.o: src/main.c.o
 
 # target to build an object file
 src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/interpreter.dir/build.make CMakeFiles/interpreter.dir/src/main.c.o
 .PHONY : src/main.c.o
 
 src/main.i: src/main.c.i
@@ -242,7 +242,7 @@ src/main.i: src/main.c.i
 
 # target to preprocess a source file
 src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/interpreter.dir/build.make CMakeFiles/interpreter.dir/src/main.c.i
 .PHONY : src/main.c.i
 
 src/main.s: src/main.c.s
@@ -250,7 +250,7 @@ src/main.s: src/main.c.s
 
 # target to generate assembly for a file
 src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/interpreter.dir/build.make CMakeFiles/interpreter.dir/src/main.c.s
 .PHONY : src/main.c.s
 
 src/parser.o: src/parser.c.o
@@ -309,8 +309,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... compiler"
 	@echo "... generator"
+	@echo "... interpreter"
 	@echo "... lexer"
 	@echo "... parser"
 	@echo "... utils"

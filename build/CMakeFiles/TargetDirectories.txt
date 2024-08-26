@@ -1,7 +1,7 @@
-/Users/biiku/code/compiler/build/CMakeFiles/compiler.dir
-/Users/biiku/code/compiler/build/CMakeFiles/lexer.dir
-/Users/biiku/code/compiler/build/CMakeFiles/parser.dir
-/Users/biiku/code/compiler/build/CMakeFiles/generator.dir
-/Users/biiku/code/compiler/build/CMakeFiles/utils.dir
-/Users/biiku/code/compiler/build/CMakeFiles/edit_cache.dir
-/Users/biiku/code/compiler/build/CMakeFiles/rebuild_cache.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/interpreter.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/lexer.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/parser.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/generator.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/utils.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/edit_cache.dir
+/Users/biiku/code/interpreter/build/CMakeFiles/rebuild_cache.dir

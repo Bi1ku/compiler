@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/biiku/code/compiler/src/actions.c" "CMakeFiles/actions.dir/src/actions.c.o" "gcc" "CMakeFiles/actions.dir/src/actions.c.o.d"
+  "/Users/biiku/code/interpreter/src/main.c" "CMakeFiles/interpreter.dir/src/main.c.o" "gcc" "CMakeFiles/interpreter.dir/src/main.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

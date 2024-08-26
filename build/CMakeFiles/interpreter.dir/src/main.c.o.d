@@ -1,9 +1,9 @@
-CMakeFiles/compiler.dir/src/main.c.o: \
-  /Users/biiku/code/compiler/src/main.c \
-  /Users/biiku/code/compiler/src/../include/generator.h \
-  /Users/biiku/code/compiler/src/../include/types.h \
-  /Users/biiku/code/compiler/src/../include/lexer.h \
-  /Users/biiku/code/compiler/src/../include/parser.h \
+CMakeFiles/interpreter.dir/src/main.c.o: \
+  /Users/biiku/code/interpreter/src/main.c \
+  /Users/biiku/code/interpreter/src/../include/generator.h \
+  /Users/biiku/code/interpreter/src/../include/types.h \
+  /Users/biiku/code/interpreter/src/../include/lexer.h \
+  /Users/biiku/code/interpreter/src/../include/parser.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/stdlib.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/Availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityVersions.h \

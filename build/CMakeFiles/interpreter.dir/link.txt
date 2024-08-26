@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/interpreter.dir/src/main.c.o -o interpreter  -Wl,-rpath,/Users/biiku/code/interpreter/build liblexer.dylib libparser.dylib libgenerator.dylib libutils.dylib

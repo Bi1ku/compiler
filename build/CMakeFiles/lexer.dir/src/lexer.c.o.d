@@ -1,7 +1,7 @@
 CMakeFiles/lexer.dir/src/lexer.c.o: \
-  /Users/biiku/code/compiler/src/lexer.c \
-  /Users/biiku/code/compiler/src/../include/types.h \
-  /Users/biiku/code/compiler/src/../include/utils.h \
+  /Users/biiku/code/interpreter/src/lexer.c \
+  /Users/biiku/code/interpreter/src/../include/types.h \
+  /Users/biiku/code/interpreter/src/../include/utils.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/ctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_ctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/cdefs.h \
