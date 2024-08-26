@@ -79,7 +79,6 @@ struct node *parse_primary() {
   }
 
   else if (strcmp(line[idx].value, "(") == 0) {
-    printf("VALUE: %s \n", line[idx].value);
     idx++;
     node = parse_expression(0);
     idx++;
@@ -89,7 +88,19 @@ struct node *parse_primary() {
 }
 
 void parse_line(struct node *node) {
-  // combine arithmetic parser with regular
+  if (line[idx].type == Keyword) {
+    node->value = line[idx];
+  }
+
+  else if (line[idx].type == Num || line[idx].type == BinOpr) {
+    node = parse_expression(0);
+  }
+
+  if (idx < line_length) {
+    idx++;
+    parse_line(node->right);
+    parse_line(node->left);
+  }
 };
 
 void parser(token tokens[], int tokens_length, struct node **trees) {
@@ -99,8 +110,8 @@ void parser(token tokens[], int tokens_length, struct node **trees) {
     if (tokens[i].type == End && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       trees[trees_length] = create_node(tokens[i]);
-      trees[trees_length] = parse_expression(0); // arithmetic parser
-      // parse_line(trees[trees_length]);
+      print_tokens(line, line_length);
+      parse_line(trees[trees_length]);
       line_length = 0;
       trees_length++;
     }

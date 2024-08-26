@@ -14,36 +14,40 @@ char in_string_array(char *arr[], char str[], int length) {
   return 0;
 }
 
+void print_token(token token) {
+  char *type;
+
+  switch (token.type) {
+  case Keyword:
+    type = "KEYWORD";
+    break;
+  case Num:
+    type = "NUMBER";
+    break;
+  case BinOpr:
+    type = "OPERATION";
+    break;
+  case Str:
+    type = "STRING";
+    break;
+  case End:
+    type = "END";
+    break;
+  case Bool:
+    type = "BOOLEAN";
+    break;
+  case Cont:
+    type = "CONTAINER";
+    break;
+  }
+
+  printf("{ type: %s, value: %s },\n", type, token.value);
+}
+
 void print_tokens(token *tokens, int length) {
   printf("[\n");
   for (int i = 0; i < length; i++) {
-    char *type;
-
-    switch (tokens[i].type) {
-    case Keyword:
-      type = "KEYWORD";
-      break;
-    case Num:
-      type = "NUMBER";
-      break;
-    case BinOpr:
-      type = "OPERATION";
-      break;
-    case Str:
-      type = "STRING";
-      break;
-    case End:
-      type = "END";
-      break;
-    case Bool:
-      type = "BOOLEAN";
-      break;
-    case Cont:
-      type = "CONTAINER";
-      break;
-    }
-
-    printf("{ type: %s, value: %s },\n", type, tokens[i].value);
+    print_token(tokens[i]);
   }
   printf("]\n");
 }
@@ -74,14 +78,4 @@ void print_trees(struct node **trees, int trees_length) {
     print_tree(trees[i]);
     printf("\n---------------NEW TREE--------------\n\n");
   }
-}
-
-token *slice_tokens(token tokens[], int start, int end) {
-  token *res = malloc(sizeof(token) * start - end);
-
-  for (int i = start; i < end; i++) {
-    res[i - start] = tokens[i];
-  }
-
-  return res;
 }
