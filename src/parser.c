@@ -90,15 +90,26 @@ struct node *parse_primary() {
 struct node *parse_line() {
   struct node *node;
 
-  if (line[idx].type == Keyword) {
+  switch (line[idx].type) {
+  case Keyword:
     node = create_node(line[idx]);
-  }
+    break;
 
-  else if (line[idx].type == Num || line[idx].type == BinOpr) {
+  case Num:
+  case BinOpr:
     node = parse_expression(0);
+    break;
+
+  case Str:
+    node = create_node(line[idx]);
+    break;
+
+  default:
+    node = NULL;
+    break;
   }
 
-  if (idx < line_length) {
+  if (idx < line_length - 1) {
     idx++;
 
     node->right = parse_line();
@@ -113,7 +124,9 @@ void parser(token tokens[], int tokens_length, struct node **trees) {
   for (int i = 0; i < tokens_length; i++) {
     if (tokens[i].type == End && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
+      //      print_tokens(line, line_length);
       trees[trees_length] = parse_line();
+      idx = 0;
       line_length = 0;
       trees_length++;
     }
