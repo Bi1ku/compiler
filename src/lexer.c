@@ -18,7 +18,6 @@ int lexer(token tokens[100], char path[]) {
   int tokens_length = 0;
 
   char found_str = 0;
-  char in_container = 0;
   char found_num = 0;
   char end_line = 0;
 
@@ -60,7 +59,7 @@ int lexer(token tokens[100], char path[]) {
 
       // CONTAINERS
       if (strcmp(letter, "{") == 0) {
-        in_container = 1;
+        end_line = 0;
         tokens[tokens_length].type = Cont;
         strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
@@ -68,7 +67,6 @@ int lexer(token tokens[100], char path[]) {
       }
 
       else if (strcmp(letter, "}") == 0) {
-        in_container = 0;
         tokens[tokens_length].type = Cont;
         strcpy(tokens[tokens_length].value, letter);
         strcpy(word, "");
@@ -102,12 +100,9 @@ int lexer(token tokens[100], char path[]) {
 
       if (end_line) {
         end_line = 0;
-
-        if (!in_container) {
-          tokens[tokens_length].type = End;
-          strcpy(tokens[tokens_length].value, "newline");
-          tokens_length++;
-        }
+        tokens[tokens_length].type = End;
+        strcpy(tokens[tokens_length].value, "newline");
+        tokens_length++;
       }
     }
   }

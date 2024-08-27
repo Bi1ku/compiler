@@ -1,7 +1,7 @@
 #ifndef MAIN
 #define MAIN
 
-typedef enum { Keyword, Num, BinOpr, Str, Bool, End, Cont } type;
+typedef enum { Keyword, Num, BinOpr, Str, Bool, End, Cont, Body } type;
 
 typedef struct {
   char add;

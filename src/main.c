@@ -6,7 +6,7 @@
 
 int main() {
   token tokens[100] = {};
-  int tokens_length = lexer(tokens, "../tests/test3.bi");
+  int tokens_length = lexer(tokens, "../tests/test2.bi");
 
   struct node **trees = malloc(0);
   parser(tokens, tokens_length, trees);

@@ -1,10 +1,8 @@
 print 2 + 2
-input "Which do you like more? 2 Dogs or 2 Cats?" 
-print (2 * 3 )
 
-loop 5 {
+loop 4 {  
   print "Hello, World!"
+  print "Goodbye, World!"
 }
 
-
-input "What is 23 * 2?" 
+input "What is your name?"

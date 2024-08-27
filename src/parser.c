@@ -17,6 +17,11 @@ int idx = 0;
 token line[100] = {};
 int line_length = 0;
 
+token body_token = {
+    .type = Body,
+    .value = "body",
+};
+
 struct node *create_node(token value) {
   struct node *result = malloc(sizeof(struct node));
 
@@ -87,6 +92,17 @@ struct node *parse_primary() {
   return node;
 }
 
+struct node *parse_line();
+
+// TODO: IMPLEMENT PARSE_CONTAINER
+struct node *parse_container(struct node *body) {
+  idx++;
+
+  body->left = parse_line();
+
+  return body;
+}
+
 struct node *parse_line() {
   struct node *node;
 
@@ -102,6 +118,10 @@ struct node *parse_line() {
 
   case Str:
     node = create_node(line[idx]);
+    break;
+
+  case Cont:
+    // stuff
     break;
 
   default:
@@ -121,10 +141,11 @@ struct node *parse_line() {
 void parser(token tokens[], int tokens_length, struct node **trees) {
   int trees_length = 0;
 
+  // TODO: fix this to work with new lexer updates (newlines in containers)
   for (int i = 0; i < tokens_length; i++) {
     if (tokens[i].type == End && line_length > 0) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
-      //      print_tokens(line, line_length);
+      print_tokens(line, line_length);
       trees[trees_length] = parse_line();
       idx = 0;
       line_length = 0;
