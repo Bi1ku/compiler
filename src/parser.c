@@ -22,6 +22,8 @@ token body_token = {
     .value = "body",
 };
 
+char in_container = 0;
+
 struct node *create_node(token value) {
   struct node *result = malloc(sizeof(struct node));
 
@@ -96,24 +98,49 @@ struct node *parse_line();
 
 // TODO: IMPLEMENT PARSE_CONTAINER
 struct node *parse_container(struct node *body) {
-  idx++;
+  if (idx < line_length - 1) {
+    idx++;
+    body = create_node(body_token);
 
-  body->left = parse_line();
+    struct node *parsed = parse_line();
+    if (parsed) {
+      body->left = parsed;
+    }
+
+    if (!(strcmp(line[idx].value, "}") == 0)) {
+      if (parsed)
+        parse_container(body->right);
+      else
+        parse_container(body);
+    }
+  }
+
+  print_tree(body); // seg fault
 
   return body;
 }
 
 struct node *parse_line() {
+  if (line[idx].type == End) {
+    return NULL;
+  }
+
   struct node *node;
 
   switch (line[idx].type) {
-  case Keyword:
-    node = create_node(line[idx]);
-    break;
-
   case Num:
   case BinOpr:
     node = parse_expression(0);
+    idx--;
+    break;
+
+  case Keyword:
+    node = create_node(line[idx]);
+    if (strcmp(line[idx].value, "loop") == 0) {
+      idx++;
+      node->left = parse_expression(0);
+      idx--;
+    }
     break;
 
   case Str:
@@ -121,7 +148,7 @@ struct node *parse_line() {
     break;
 
   case Cont:
-    // stuff
+    node = parse_container(node);
     break;
 
   default:
@@ -141,9 +168,8 @@ struct node *parse_line() {
 void parser(token tokens[], int tokens_length, struct node **trees) {
   int trees_length = 0;
 
-  // TODO: fix this to work with new lexer updates (newlines in containers)
   for (int i = 0; i < tokens_length; i++) {
-    if (tokens[i].type == End && line_length > 0) {
+    if (tokens[i].type == End && line_length > 0 && !in_container) {
       trees = realloc(trees, sizeof(struct node) * (i + 1));
       print_tokens(line, line_length);
       trees[trees_length] = parse_line();
@@ -153,9 +179,17 @@ void parser(token tokens[], int tokens_length, struct node **trees) {
     }
 
     else {
-      if (tokens[i].type != End) {
+      if (tokens[i].type != End || in_container) {
         line[line_length] = tokens[i];
         line_length++;
+      }
+
+      if (strcmp(tokens[i].value, "{") == 0) {
+        in_container = 1;
+      }
+
+      else if (strcmp(tokens[i].value, "}") == 0) {
+        in_container = 0;
       }
     }
   }

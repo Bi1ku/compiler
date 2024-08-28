@@ -39,6 +39,9 @@ void print_token(token token) {
   case Cont:
     type = "CONTAINER";
     break;
+  case Body:
+    type = "BODY";
+    break;
   }
 
   printf("{ type: %s, value: %s },\n", type, token.value);
@@ -59,12 +62,12 @@ void print_tree(struct node *node) {
     if (node->right != NULL)
       printf("RIGHT NODE VALUE: %s \n", node->right->value.value);
     else
-      printf("RIGHT NODE VALUE: XX[NULL]XX \n");
+      printf("RIGHT NODE VALUE: NULL \n");
 
     if (node->left != NULL)
       printf("LEFT NODE VALUE: %s \n", node->left->value.value);
     else
-      printf("LEFT NDOE VALUE: XX[NULL]XX \n");
+      printf("LEFT NODE VALUE: NULL \n");
 
     printf("-----------NEW NODE-------------\n");
     print_tree(node->left);
