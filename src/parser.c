@@ -96,11 +96,10 @@ struct node *parse_primary() {
 
 struct node *parse_line();
 
-// TODO: IMPLEMENT PARSE_CONTAINER
 struct node *parse_container(struct node *body) {
   if (idx < line_length - 1) {
     idx++;
-    body = create_node(body_token);
+    body->right = create_node(body_token);
 
     struct node *parsed = parse_line();
     if (parsed) {
@@ -108,14 +107,13 @@ struct node *parse_container(struct node *body) {
     }
 
     if (!(strcmp(line[idx].value, "}") == 0)) {
-      if (parsed)
+      if (parsed) {
         parse_container(body->right);
-      else
+      } else {
         parse_container(body);
+      }
     }
   }
-
-  print_tree(body); // seg fault
 
   return body;
 }
@@ -148,7 +146,7 @@ struct node *parse_line() {
     break;
 
   case Cont:
-    node = parse_container(node);
+    node = parse_container(create_node(body_token));
     break;
 
   default:
