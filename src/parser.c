@@ -101,7 +101,10 @@ struct node *parse_container(struct node *body) {
     idx++;
     body->right = create_node(body_token);
 
+    // TODO: for some reason arithmetic parser shits itself when doing this. fix
+    // pls. test4
     struct node *parsed = parse_line();
+
     if (parsed) {
       body->left = parsed;
     }
